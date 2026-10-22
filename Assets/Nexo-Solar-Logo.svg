@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img" aria-labelledby="logo-title logo-description">
+  <title id="logo-title">Nexo Solar — Monitoramento</title>
+  <desc id="logo-description">Símbolo de uma folha verde com um raio branco, acima do nome Nexo Solar e da palavra Monitoramento.</desc>
+  <defs>
+    <linearGradient id="leaf-main" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#79bf19"/>
+      <stop offset="0.42" stop-color="#348b2d"/>
+      <stop offset="1" stop-color="#124d2d"/>
+    </linearGradient>
+    <linearGradient id="leaf-light" x1="0" y1="0" x2="0.95" y2="0.9">
+      <stop offset="0" stop-color="#8ed51b"/>
+      <stop offset="1" stop-color="#62b82a"/>
+    </linearGradient>
+    <linearGradient id="leaf-middle" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5cae27"/>
+      <stop offset="1" stop-color="#2b7d2d"/>
+    </linearGradient>
+    <linearGradient id="base-green" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#215a30"/>
+      <stop offset="1" stop-color="#10482b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Curva inferior, que dá ao símbolo sensação de movimento e fluxo de energia. -->
+  <path d="M 399,565
+           C 454,548 515,531 570,510
+           C 606,496 633,479 648,465
+           C 651,488 638,507 610,524
+           C 563,552 493,568 399,565 Z"
+        fill="url(#base-green)"/>
+
+  <!-- Silhueta principal da folha. -->
+  <path d="M 400,565
+           C 385,527 377,481 383,436
+           C 391,376 424,333 470,306
+           C 518,278 556,260 568,183
+           C 600,221 628,274 641,329
+           C 657,396 642,459 603,507
+           C 559,555 491,572 400,565 Z"
+        fill="url(#leaf-main)"/>
+
+  <!-- Faixa clara inspirada em uma folha nova. -->
+  <path d="M 400,565
+           C 390,522 389,472 405,428
+           C 421,384 453,351 496,327
+           C 532,307 555,273 568,183
+           C 579,234 566,278 545,319
+           C 525,359 493,389 467,418
+           C 436,452 414,500 400,565 Z"
+        fill="url(#leaf-light)"/>
+
+  <!-- Nervura central que separa os tons de verde. -->
+  <path d="M 400,565
+           C 414,505 437,454 472,414
+           C 514,366 555,322 568,183
+           C 596,244 594,302 572,361
+           C 551,415 514,455 476,492
+           C 446,521 420,548 400,565 Z"
+        fill="url(#leaf-middle)"/>
+
+  <!-- Raio branco recortado no interior da folha. -->
+  <path d="M 552,281
+           L 495,380
+           L 542,381
+           L 421,515
+           L 474,412
+           L 428,412 Z"
+        fill="#FFFFFF"/>
+
+  <!-- NEXO SOLAR: letras convertidas em curvas; não depende de fontes instaladas. -->
+  <g aria-label="NEXO SOLAR" fill="#14552B" transform="translate(110.0000 691) scale(0.052859854 -0.058593750)">
+    <path transform="translate(0.0000 0)" d="M188 1493H618L1161 469V1493H1526V0H1096L553 1024V0H188Z"/>
+    <path transform="translate(1714.0000 0)" d="M188 1493H1227V1202H573V924H1188V633H573V291H1249V0H188Z"/>
+    <path transform="translate(3113.0000 0)" d="M1020 762 1538 0H1137L788 510L442 0H39L557 762L59 1493H461L788 1012L1114 1493H1518Z"/>
+    <path transform="translate(4619.0000 0)" d="M870 1241Q694 1241 597.0 1111.0Q500 981 500 745Q500 510 597.0 380.0Q694 250 870 250Q1047 250 1144.0 380.0Q1241 510 1241 745Q1241 981 1144.0 1111.0Q1047 1241 870 1241ZM870 1520Q1230 1520 1434.0 1314.0Q1638 1108 1638 745Q1638 383 1434.0 177.0Q1230 -29 870 -29Q511 -29 306.5 177.0Q102 383 102 745Q102 1108 306.5 1314.0Q511 1520 870 1520Z"/>
+    <path transform="translate(7073.0000 0)" d="M1227 1446V1130Q1104 1185 987.0 1213.0Q870 1241 766 1241Q628 1241 562.0 1203.0Q496 1165 496 1085Q496 1025 540.5 991.5Q585 958 702 934L866 901Q1115 851 1220.0 749.0Q1325 647 1325 459Q1325 212 1178.5 91.5Q1032 -29 731 -29Q589 -29 446.0 -2.0Q303 25 160 78V403Q303 327 436.5 288.5Q570 250 694 250Q820 250 887.0 292.0Q954 334 954 412Q954 482 908.5 520.0Q863 558 727 588L578 621Q354 669 250.5 774.0Q147 879 147 1057Q147 1280 291.0 1400.0Q435 1520 705 1520Q828 1520 958.0 1501.5Q1088 1483 1227 1446Z"/>
+    <path transform="translate(8548.0000 0)" d="M870 1241Q694 1241 597.0 1111.0Q500 981 500 745Q500 510 597.0 380.0Q694 250 870 250Q1047 250 1144.0 380.0Q1241 510 1241 745Q1241 981 1144.0 1111.0Q1047 1241 870 1241ZM870 1520Q1230 1520 1434.0 1314.0Q1638 1108 1638 745Q1638 383 1434.0 177.0Q1230 -29 870 -29Q511 -29 306.5 177.0Q102 383 102 745Q102 1108 306.5 1314.0Q511 1520 870 1520Z"/>
+    <path transform="translate(10289.0000 0)" d="M188 1493H573V291H1249V0H188Z"/>
+    <path transform="translate(11594.0000 0)" d="M1094 272H492L397 0H10L563 1493H1022L1575 0H1188ZM588 549H997L793 1143Z"/>
+    <path transform="translate(13179.0000 0)" d="M735 831Q856 831 908.5 876.0Q961 921 961 1024Q961 1126 908.5 1170.0Q856 1214 735 1214H573V831ZM573 565V0H188V1493H776Q1071 1493 1208.5 1394.0Q1346 1295 1346 1081Q1346 933 1274.5 838.0Q1203 743 1059 698Q1138 680 1200.5 616.5Q1263 553 1327 424L1536 0H1126L944 371Q889 483 832.5 524.0Q776 565 682 565Z"/>
+  </g>
+
+  <!-- MONITORAMENTO: letras convertidas em curvas; não depende de fontes instaladas. -->
+  <g aria-label="MONITORAMENTO" fill="#80C900" transform="translate(175.0000 758) scale(0.021484375 -0.021484375)">
+    <path transform="translate(0.0000 0)" d="M188 1493H678L1018 694L1360 1493H1849V0H1485V1092L1141 287H897L553 1092V0H188Z"/>
+    <path transform="translate(2822.2121 0)" d="M870 1241Q694 1241 597.0 1111.0Q500 981 500 745Q500 510 597.0 380.0Q694 250 870 250Q1047 250 1144.0 380.0Q1241 510 1241 745Q1241 981 1144.0 1111.0Q1047 1241 870 1241ZM870 1520Q1230 1520 1434.0 1314.0Q1638 1108 1638 745Q1638 383 1434.0 177.0Q1230 -29 870 -29Q511 -29 306.5 177.0Q102 383 102 745Q102 1108 306.5 1314.0Q511 1520 870 1520Z"/>
+    <path transform="translate(5347.4242 0)" d="M188 1493H618L1161 469V1493H1526V0H1096L553 1024V0H188Z"/>
+    <path transform="translate(7845.6364 0)" d="M188 1493H573V0H188Z"/>
+    <path transform="translate(9391.8485 0)" d="M10 1493H1386V1202H891V0H506V1202H10Z"/>
+    <path transform="translate(11573.0606 0)" d="M870 1241Q694 1241 597.0 1111.0Q500 981 500 745Q500 510 597.0 380.0Q694 250 870 250Q1047 250 1144.0 380.0Q1241 510 1241 745Q1241 981 1144.0 1111.0Q1047 1241 870 1241ZM870 1520Q1230 1520 1434.0 1314.0Q1638 1108 1638 745Q1638 383 1434.0 177.0Q1230 -29 870 -29Q511 -29 306.5 177.0Q102 383 102 745Q102 1108 306.5 1314.0Q511 1520 870 1520Z"/>
+    <path transform="translate(14098.2727 0)" d="M735 831Q856 831 908.5 876.0Q961 921 961 1024Q961 1126 908.5 1170.0Q856 1214 735 1214H573V831ZM573 565V0H188V1493H776Q1071 1493 1208.5 1394.0Q1346 1295 1346 1081Q1346 933 1274.5 838.0Q1203 743 1059 698Q1138 680 1200.5 616.5Q1263 553 1327 424L1536 0H1126L944 371Q889 483 832.5 524.0Q776 565 682 565Z"/>
+    <path transform="translate(16459.4848 0)" d="M1094 272H492L397 0H10L563 1493H1022L1575 0H1188ZM588 549H997L793 1143Z"/>
+    <path transform="translate(18828.6970 0)" d="M188 1493H678L1018 694L1360 1493H1849V0H1485V1092L1141 287H897L553 1092V0H188Z"/>
+    <path transform="translate(21650.9091 0)" d="M188 1493H1227V1202H573V924H1188V633H573V291H1249V0H188Z"/>
+    <path transform="translate(23834.1212 0)" d="M188 1493H618L1161 469V1493H1526V0H1096L553 1024V0H188Z"/>
+    <path transform="translate(26332.3333 0)" d="M10 1493H1386V1202H891V0H506V1202H10Z"/>
+    <path transform="translate(28513.5455 0)" d="M870 1241Q694 1241 597.0 1111.0Q500 981 500 745Q500 510 597.0 380.0Q694 250 870 250Q1047 250 1144.0 380.0Q1241 510 1241 745Q1241 981 1144.0 1111.0Q1047 1241 870 1241ZM870 1520Q1230 1520 1434.0 1314.0Q1638 1108 1638 745Q1638 383 1434.0 177.0Q1230 -29 870 -29Q511 -29 306.5 177.0Q102 383 102 745Q102 1108 306.5 1314.0Q511 1520 870 1520Z"/>
+  </g>
+</svg>

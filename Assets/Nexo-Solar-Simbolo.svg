@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="330 160 370 420" role="img" aria-labelledby="title">
+  <title id="title">Símbolo Nexo Solar</title>
+  <defs>
+    <linearGradient id="leaf-main" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#79bf19"/>
+      <stop offset=".42" stop-color="#348b2d"/>
+      <stop offset="1" stop-color="#124d2d"/>
+    </linearGradient>
+    <linearGradient id="leaf-light" x1="0" y1="0" x2=".95" y2=".9">
+      <stop offset="0" stop-color="#8ed51b"/>
+      <stop offset="1" stop-color="#62b82a"/>
+    </linearGradient>
+    <linearGradient id="leaf-middle" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5cae27"/>
+      <stop offset="1" stop-color="#2b7d2d"/>
+    </linearGradient>
+    <linearGradient id="base-green" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#215a30"/>
+      <stop offset="1" stop-color="#10482b"/>
+    </linearGradient>
+  </defs>
+  <path d="M399 565c55-17 116-34 171-55 36-14 63-31 78-45 3 23-10 42-38 59-47 28-117 44-211 41Z" fill="url(#base-green)"/>
+  <path d="M400 565c-15-38-23-84-17-129 8-60 41-103 87-130 48-28 86-46 98-123 32 38 60 91 73 146 16 67 1 130-38 178-44 48-112 65-203 58Z" fill="url(#leaf-main)"/>
+  <path d="M400 565c-10-43-11-93 5-137s48-77 91-101c36-20 59-54 72-144 11 51-2 95-23 136s-52 70-78 99c-31 34-53 82-67 147Z" fill="url(#leaf-light)"/>
+  <path d="M400 565c14-60 37-111 72-151 42-48 83-92 96-231 28 61 26 119 4 178-21 54-58 94-96 131-30 29-56 56-76 73Z" fill="url(#leaf-middle)"/>
+  <path d="m552 281-57 99 47 1-121 134 53-103-46 0Z" fill="#fff"/>
+</svg>

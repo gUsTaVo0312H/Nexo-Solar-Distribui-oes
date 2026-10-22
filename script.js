@@ -6,6 +6,7 @@
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
   const app = $('#app');
   let murmurationCleanup = null;
+  let landingEffectsCleanup = null;
   const priorityLabel = { alta: 'Alta', media: 'Média', baixa: 'Baixa' };
   const stateLabel = { ligado: 'Ligado', desligado: 'Desligado', bloqueado: 'Bloqueado', aguardando: 'Aguardando' };
   const navItems = [
@@ -84,7 +85,7 @@
   }
   const fmt = n => Number(n).toLocaleString('pt-BR');
   const icon = (name, extra = '') => `<svg ${extra} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${iconPaths[name] || ''}</svg>`;
-  const logo = (light = false) => `<span class="logo ${light ? 'logo-light' : ''}" aria-label="Nexo"><span class="logo-mark"><i></i><i></i><i></i></span><strong>Nexo</strong></span>`;
+  const logo = (light = false) => `<span class="logo ${light ? 'logo-light' : ''}" aria-label="Nexo"><img class="logo-symbol" src="./Assets/Nexo-Solar-Simbolo.svg" alt=""><strong>Nexo</strong></span>`;
   const btn = (text, { action = '', page = '', variant = 'primary', iconName = '', extra = '' } = {}) => `<button class="button button-${variant}" ${action ? `data-action="${action}"` : ''} ${page ? `data-page="${page}"` : ''} ${extra}>${iconName ? icon(iconName) : ''}${text}</button>`;
   const statusDot = (tone = 'success') => `<span class="status-dot ${tone}"></span>`;
   const dotTone = s => s === 'ligado' ? 'success' : s === 'bloqueado' ? 'warning' : 'muted';
@@ -130,11 +131,18 @@
 
   function renderLanding() {
     return `<main class="landing">
+      <header class="landing-nav"><div class="landing-nav-inner">
+        <button class="logo-home" data-action="home" aria-label="Voltar ao início">${logo(true)}</button>
+        <nav aria-label="Navegação principal">
+          <button data-action="scroll-section" data-section="como-funciona">Como funciona</button>
+          <button data-action="scroll-section" data-section="sistema">O sistema</button>
+          <button data-action="scroll-section" data-section="seguranca">Segurança</button>
+          <button data-page="login" data-action="navigate">Entrar</button>
+          ${btn('Criar acesso', { page: 'cadastro', action: 'navigate', variant: 'secondary' })}
+        </nav>
+      </div></header>
       <div class="mmw-root" id="murmuration" style="height:100svh"><canvas aria-hidden="true"></canvas><span class="sr-only">NEXO</span>
         <div class="mmw-overlay"><div class="landing-shell">
-          <header class="landing-nav">${logo(true)}<nav aria-label="Navegação principal">
-            <button data-action="scroll-story">Como funciona</button><button data-page="login" data-action="navigate">Entrar</button>${btn('Criar acesso', { page: 'cadastro', action: 'navigate', variant: 'secondary' })}
-          </nav></header>
           <section class="hero-copy"><p class="hero-context">Energia para o que realmente importa</p>
             <h1>Sua casa decide melhor durante uma falta de energia.</h1>
             <p>Escolha prioridades, defina limites e entenda quais equipamentos podem continuar funcionando — sem confundir preferência com disponibilidade.</p>
@@ -143,14 +151,25 @@
           <div class="hero-readout" aria-label="Demonstração do estado energético"><div><span>Bateria</span><strong>67%</strong></div><div><span>Disponível</span><strong>2,2 kW</strong></div><div>${statusDot()}<span>4 cargas preservadas</span></div></div>
         </div></div>
       </div>
-      <section class="landing-story" id="como-funciona"><div class="story-heading"><h2>Preferências pessoais.<br>Limites técnicos intactos.</h2><p>O Nexo cruza o que você considera essencial com os dados energéticos da casa. Cada decisão vem acompanhada do motivo.</p></div>
-        <div class="decision-flow"><div><span>Bateria e geração</span><strong>O que existe agora</strong></div>${icon('chevron')}<div><span>Suas prioridades</span><strong>O que importa para você</strong></div>${icon('chevron')}<div><span>Limites de segurança</span><strong>O que pode ser ligado</strong></div></div>
-      </section></main>`;
+      <section class="landing-story reveal-section" id="como-funciona"><div class="story-heading reveal"><div><span class="section-kicker">01 / Como funciona</span><h2>Preferências pessoais.<br>Limites técnicos intactos.</h2></div><p>O Nexo cruza o que você considera essencial com os dados energéticos da casa. Cada decisão vem acompanhada do motivo — para que você saiba não apenas o que aconteceu, mas por quê.</p></div>
+        <div class="decision-flow reveal"><div><span>01 · Energia</span><strong>O que existe agora</strong><small>Bateria, geração e rede</small></div>${icon('chevron')}<div><span>02 · Prioridades</span><strong>O que importa para você</strong><small>Equipamentos essenciais</small></div>${icon('chevron')}<div><span>03 · Decisão</span><strong>O que pode continuar</strong><small>Regras e limites seguros</small></div></div>
+      </section>
+      <section class="system-section reveal-section" id="sistema"><div class="system-intro reveal"><span class="section-kicker">02 / O sistema</span><h2>Uma visão mais clara<br>da energia da sua casa.</h2><p>Menos suposições. Mais contexto para escolher como a energia disponível deve ser usada.</p></div>
+        <div class="system-grid">
+          <article class="system-card system-card-priorities reveal"><span class="card-index">01 — Prioridades</span><div class="priority-visual"><span>Geladeira <i class="priority-line priority-high"></i><b>Alta</b></span><span>Iluminação <i class="priority-line priority-medium"></i><b>Média</b></span><span>Conforto <i class="priority-line priority-low"></i><b>Baixa</b></span></div><h3>O que é essencial para você.</h3><p>Organize os equipamentos por importância e defina a ordem em que devem receber energia.</p></article>
+          <article class="system-card system-card-capacity reveal"><span class="card-index">02 — Capacidade</span><div class="capacity-visual"><div class="capacity-ring"><strong>67<small>%</small></strong></div><div><span>Bateria</span><b>Disponível</b><span class="capacity-bar"><i></i></span></div></div><h3>O que a casa pode oferecer.</h3><p>Acompanhe bateria, potência disponível e o estado da rede em uma leitura simples.</p></article>
+          <article class="system-card system-card-decision reveal"><span class="card-index">03 — Transparência</span><div class="decision-visual"><span class="decision-status">${icon('check')} Carga preservada</span><strong>Roteador</strong><p>Prioridade alta · 18 W</p><small>Dentro do limite de energia disponível.</small></div><h3>Por que cada decisão foi tomada.</h3><p>Entenda quando uma carga é mantida, aguarda ou é bloqueada — sempre com a justificativa.</p></article>
+        </div>
+      </section>
+      <section class="safety-section reveal-section" id="seguranca"><div class="safety-mark reveal">${icon('bolt')}</div><div class="safety-copy reveal"><span class="section-kicker">03 / Segurança por princípio</span><h2>Preferência orienta.<br>Limite técnico decide.</h2><p>Uma prioridade pessoal nunca ultrapassa a potência ou a bateria disponíveis. O sistema foi pensado para explicar as opções sem prometer energia que a casa não tem.</p><button data-action="scroll-section" data-section="como-funciona">Entenda o fluxo ${icon('chevron')}</button></div><div class="safety-note reveal"><span>SIMULAÇÃO SEGURA</span><p>Esta experiência é demonstrativa. Nenhum dispositivo físico é acionado e nenhuma integração real está conectada.</p></div></section>
+      <section class="landing-cta reveal-section"><span class="section-kicker reveal">Energia com mais intenção.</span><h2 class="reveal">Comece entendendo<br>o que importa na sua casa.</h2><div class="reveal">${btn(`Explorar demonstração ${icon('chevron')}`, { page: 'cadastro', action: 'navigate' })}</div></section>
+      <footer class="landing-footer"><button class="logo-home" data-action="home" aria-label="Voltar ao início">${logo()}</button><span>Gestão de energia residencial · ambiente demonstrativo</span><button data-action="home">Voltar ao início ↑</button></footer>
+    </main>`;
   }
 
   function renderAuth() {
     const isLogin = state.page === 'login';
-    return `<main class="auth-page"><button class="auth-brand" data-action="navigate" data-page="landing">${logo()}</button>
+    return `<main class="auth-page"><button class="auth-brand" data-action="home" aria-label="Voltar ao início">${logo()}</button>
       <section class="auth-panel"><div class="auth-intro"><span class="demo-badge">Acesso demonstrativo</span><h1>${isLogin ? 'Bem-vindo de volta.' : 'Comece pela sua casa.'}</h1><p>${isLogin ? 'Entre para acompanhar a distribuição de energia e ajustar suas prioridades.' : 'Crie um perfil demonstrativo para explorar as regras e cenários do Nexo.'}</p></div>
         <form data-form="auth">${!isLogin ? '<label>Nome completo<input required name="name" placeholder="Como devemos chamar você?" autocomplete="name"></label>' : ''}
           <label>E-mail<input required name="email" type="email" placeholder="voce@exemplo.com" autocomplete="email"></label>
@@ -164,7 +183,7 @@
     const current = navItems.find(item => item.page === state.page) || navItems[0];
     const energy = state.energy;
     const nav = items => items.map(item => `<button class="${state.page === item.page ? 'active' : ''}" data-action="navigate" data-page="${item.page}">${icon(item.icon)}<span>${esc(item.label.replace('Visão geral', 'Início'))}</span></button>`).join('');
-    return `<div class="app-shell"><aside class="sidebar ${state.menuOpen ? 'open' : ''}"><div class="sidebar-top">${logo()}<button class="mobile-close" data-action="close-menu" aria-label="Fechar menu">${icon('close')}</button></div><nav aria-label="Áreas do Nexo">${navItems.map(item => `<button class="${state.page === item.page ? 'active' : ''}" data-action="navigate" data-page="${item.page}">${icon(item.icon)}<span>${esc(item.label)}</span></button>`).join('')}</nav>
+    return `<div class="app-shell"><aside class="sidebar ${state.menuOpen ? 'open' : ''}"><div class="sidebar-top"><button class="logo-home" data-action="home" aria-label="Voltar ao início">${logo()}</button><button class="mobile-close" data-action="close-menu" aria-label="Fechar menu">${icon('close')}</button></div><nav aria-label="Áreas do Nexo">${navItems.map(item => `<button class="${state.page === item.page ? 'active' : ''}" data-action="navigate" data-page="${item.page}">${icon(item.icon)}<span>${esc(item.label)}</span></button>`).join('')}</nav>
       <div class="sidebar-status"><div>${statusDot(energy.gridOnline ? 'success' : 'warning')}<span>${energy.gridOnline ? 'Rede disponível' : 'Modo backup'}</span></div><small>Dados ${energy.source === 'simulado' ? 'simulados' : 'externos'} · ${esc(energy.updatedAt)}</small></div></aside>
       ${state.menuOpen ? '<button class="menu-scrim" data-action="close-menu" aria-label="Fechar navegação"></button>' : ''}
       <div class="main-column"><header class="app-header"><button class="menu-trigger" data-action="open-menu" aria-label="Abrir menu">${icon('menu')}</button><div><span>${esc(state.residenceName)}</span><strong>${esc(current.label)}</strong></div><div class="header-actions"><span class="source-badge">${energy.source === 'simulado' ? 'Simulação ativa' : 'Fonte externa'}</span><button class="avatar" aria-label="Perfil demonstrativo">MA</button></div></header><main class="app-content">${content}</main></div>
@@ -232,6 +251,7 @@
   function render() {
     if (!app) return;
     if (murmurationCleanup) { murmurationCleanup(); murmurationCleanup = null; }
+    if (landingEffectsCleanup) { landingEffectsCleanup(); landingEffectsCleanup = null; }
     if (state.page === 'landing') app.innerHTML = renderLanding();
     else if (state.page === 'login' || state.page === 'cadastro') app.innerHTML = renderAuth();
     else {
@@ -245,7 +265,30 @@
       if (state.page === 'configuracoes') content = renderSettings();
       app.innerHTML = renderShell(content);
     }
-    if (state.page === 'landing') initMurmuration();
+    if (state.page === 'landing') { initMurmuration(); initLandingEffects(); }
+  }
+
+  function initLandingEffects() {
+    const header = $('.landing-nav');
+    const reveals = $$('.reveal');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const updateHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 32);
+    window.addEventListener('scroll', updateHeader, { passive: true });
+    updateHeader();
+    if (reducedMotion || !('IntersectionObserver' in window)) {
+      reveals.forEach(element => element.classList.add('is-visible'));
+      landingEffectsCleanup = () => window.removeEventListener('scroll', updateHeader);
+      return;
+    }
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: .14, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(element => observer.observe(element));
+    landingEffectsCleanup = () => { observer.disconnect(); window.removeEventListener('scroll', updateHeader); };
   }
 
   function initMurmuration() {
@@ -255,23 +298,41 @@
     if (!root || !canvas || !ctx) return;
     if (murmurationCleanup) { murmurationCleanup(); murmurationCleanup = null; }
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let width = 1, height = 1, dpr = 1, raf = 0, particles = [], targets = [], clock = 0, last = performance.now();
-    let pointer = { x: -9999, y: -9999 };
+    let width = 1, height = 1, dpr = 1, raf = 0, particles = [], wordmarkTargets = [], solarTargets = [], clock = 0, last = performance.now();
+    let pointer = { x: -9999, y: -9999 }, displayMode = 'wordmark', nextMode = 'solar';
+    let hasDisturbedParticles = false, scatterUntil = 0, scatterTimer = 0, pendingMode = 'solar';
     let seed = 41;
     const rand = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
-    const ease = v => { const x = Math.max(0, Math.min(1, v)); return x * x * (3 - 2 * x); };
     function layout() {
       const rect = root.getBoundingClientRect(); width = Math.max(1, Math.round(rect.width)); height = Math.max(1, Math.round(rect.height)); dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = width * dpr; canvas.height = height * dpr;
       const mask = document.createElement('canvas'); mask.width = width; mask.height = height;
-      const mctx = mask.getContext('2d', { willReadFrequently: true }); targets = [];
+      const mctx = mask.getContext('2d', { willReadFrequently: true });
+      wordmarkTargets = []; solarTargets = [];
       if (mctx) {
-        const size = Math.min(width * .23, height * .28); mctx.font = `900 ${size}px Manrope, sans-serif`; mctx.textAlign = 'center'; mctx.textBaseline = 'middle'; mctx.fillText('NEXO', width * .5, height * .43);
-        const pixels = mctx.getImageData(0, 0, width, height).data; const step = Math.max(4, Math.round(Math.sqrt(width * height / 24000)));
-        for (let y = 0; y < height; y += step) for (let x = 0; x < width; x += step) if (pixels[(y * width + x) * 4 + 3] > 100) targets.push({ x, y });
+        const step = Math.max(5, Math.round(Math.sqrt(width * height / 30000)));
+        const collectTargets = word => {
+          mctx.clearRect(0, 0, width, height);
+          let size = Math.min(width * .23, height * .25);
+          mctx.font = `900 ${size}px Manrope, sans-serif`;
+          size *= Math.min(1, width * .34 / mctx.measureText(word).width);
+          mctx.font = `900 ${size}px Manrope, sans-serif`;
+          mctx.textAlign = 'center'; mctx.textBaseline = 'middle'; mctx.fillText(word, width * .82, height * .43);
+          const pixels = mctx.getImageData(0, 0, width, height).data;
+          const targets = [];
+          for (let y = 0; y < height; y += step) for (let x = 0; x < width; x += step) if (pixels[(y * width + x) * 4 + 3] > 100) targets.push({ x, y });
+          return targets;
+        };
+        wordmarkTargets = collectTargets('NEXO');
+        solarTargets = collectTargets('SOLAR');
       }
+      const targets = displayMode === 'solar' ? solarTargets : wordmarkTargets;
       const count = Math.max(360, Math.round(780 * Math.min(1, width * height / 600000)));
-      particles = Array.from({ length: count }, (_, i) => { const angle = rand() * Math.PI * 2, radius = Math.sqrt(rand()); return { x: width * .5 + Math.cos(angle) * radius * width * .24, y: height * .4 + Math.sin(angle) * radius * height * .19, vx: 0, vy: 0, phase: rand() * Math.PI * 2, depth: .55 + rand() * .45, target: targets.length ? i % targets.length : 0 }; });
+      particles = Array.from({ length: count }, (_, i) => {
+        const targetIndex = targets.length ? i % targets.length : 0;
+        const target = targets[targetIndex] || { x: width * .5, y: height * .43 };
+        return { x: target.x, y: target.y, vx: 0, vy: 0, phase: rand() * Math.PI * 2, depth: .55 + rand() * .45, target: targetIndex };
+      });
       paint(0, true);
     }
     function paint(dt, still = false) {
@@ -280,26 +341,82 @@
       const glow = ctx.createRadialGradient(width * .7, height * .82, 0, width * .7, height * .82, width * .42); glow.addColorStop(0, 'rgba(243,217,139,.8)'); glow.addColorStop(1, 'rgba(243,217,139,0)'); ctx.fillStyle = glow; ctx.fillRect(0, 0, width, height);
       if (!still) {
         clock += dt;
-        const flyFor = 4.8, holdFor = 2.8, cycle = flyFor + 2.2 + holdFor + .8, t = clock % cycle;
-        const pull = t < flyFor ? 0 : t < flyFor + 2.2 ? ease((t - flyFor) / 2.2) : t < flyFor + 2.2 + holdFor ? 1 : 1 - ease((t - flyFor - 2.2 - holdFor) / .8);
-        const centreX = width * (.5 + Math.sin(clock * .19) * .18), centreY = height * (.4 + Math.sin(clock * .31) * .08);
+        const targets = displayMode === 'solar' ? solarTargets : wordmarkTargets;
+        const scattering = scatterUntil > 0;
         for (const p of particles) {
-          const target = targets[p.target]; let ax = (centreX - p.x) * .35 + Math.sin(p.y * .015 + clock) * 42; let ay = (centreY - p.y) * .35 + Math.cos(p.x * .011 - clock * .8) * 36;
-          if (target && pull > 0) { ax += (target.x - p.x) * 8 * pull - p.vx * 2.8 * pull; ay += (target.y - p.y) * 8 * pull - p.vy * 2.8 * pull; }
+          const target = targets[p.target % targets.length];
+          let ax = scattering ? 0 : target ? (target.x - p.x) * 32 : 0;
+          let ay = scattering ? 0 : target ? (target.y - p.y) * 32 : 0;
+          ax += Math.sin(p.phase + clock) * (scattering ? 18 : 1.5);
+          ay += Math.cos(p.phase + clock) * (scattering ? 18 : 1.5);
           const dx = p.x - pointer.x, dy = p.y - pointer.y, dist = Math.hypot(dx, dy); if (dist < 130) { const force = (1 - dist / 130) * 3300; ax += dx / (dist + .1) * force; ay += dy / (dist + .1) * force; }
-          p.vx = (p.vx + ax * dt) * (1 - dt * 1.1); p.vy = (p.vy + ay * dt) * (1 - dt * 1.1); p.x += p.vx * dt; p.y += p.vy * dt; p.phase += dt * 10;
+          if (scattering) {
+            p.vx = (p.vx + ax * dt) * (1 - dt * 1.2);
+            p.vy = (p.vy + ay * dt) * (1 - dt * 1.2);
+          } else {
+            p.vx += (ax - p.vx * 12) * dt;
+            p.vy += (ay - p.vy * 12) * dt;
+          }
+          p.x += p.vx * dt; p.y += p.vy * dt; p.phase += dt * 10;
         }
       }
       ctx.beginPath();
-      for (const p of particles) { const size = 1.4 + p.depth * 1.8, flap = .45 + Math.sin(p.phase) * .35; ctx.moveTo(p.x - size, p.y + flap); ctx.lineTo(p.x, p.y); ctx.lineTo(p.x + size, p.y + flap); }
-      ctx.strokeStyle = '#111B15'; ctx.globalAlpha = .78; ctx.lineWidth = 1; ctx.stroke(); ctx.globalAlpha = 1; ctx.fillStyle = '#15271D'; ctx.fillRect(0, height - 5, width, 5);
+      for (const p of particles) { const size = 1.2 + p.depth * 1.2; ctx.moveTo(p.x + size, p.y); ctx.arc(p.x, p.y, size, 0, Math.PI * 2); }
+      ctx.fillStyle = '#111B15'; ctx.globalAlpha = .78; ctx.fill(); ctx.globalAlpha = 1; ctx.fillStyle = '#15271D'; ctx.fillRect(0, height - 5, width, 5);
     }
-    function frame(now) { if (!document.body.contains(root)) return; raf = requestAnimationFrame(frame); const dt = prefersReduced ? 0 : Math.min(.035, (now - last) / 1000); last = now; paint(dt, prefersReduced); }
-    function onMove(event) { const rect = root.getBoundingClientRect(); pointer = { x: event.clientX - rect.left, y: event.clientY - rect.top }; }
-    function onLeave() { pointer = { x: -9999, y: -9999 }; }
-    layout(); if (!prefersReduced) raf = requestAnimationFrame(frame); const observer = new ResizeObserver(layout); observer.observe(root); root.addEventListener('pointermove', onMove); root.addEventListener('pointerleave', onLeave);
+    function frame(now) {
+      if (!document.body.contains(root)) return;
+      raf = requestAnimationFrame(frame);
+      const dt = prefersReduced ? 0 : Math.min(.035, (now - last) / 1000);
+      last = now; paint(dt, prefersReduced);
+    }
+    function beginTransition(origin) {
+      pendingMode = nextMode;
+      nextMode = nextMode === 'solar' ? 'wordmark' : 'solar';
+      if (prefersReduced) {
+        window.clearTimeout(scatterTimer);
+        scatterUntil = 0;
+        displayMode = pendingMode;
+        const targets = displayMode === 'solar' ? solarTargets : wordmarkTargets;
+        particles.forEach((particle, index) => {
+          const target = targets[index % targets.length];
+          if (target) { particle.x = target.x; particle.y = target.y; }
+          particle.vx = 0; particle.vy = 0;
+        });
+        paint(0, true);
+        return;
+      }
+      window.clearTimeout(scatterTimer);
+      scatterUntil = performance.now() + 2300;
+      scatterTimer = window.setTimeout(() => {
+        displayMode = pendingMode;
+        scatterUntil = 0;
+        particles.forEach(particle => { particle.vx *= .15; particle.vy *= .15; });
+      }, 2300);
+      particles.forEach(particle => {
+        const dx = particle.x - origin.x, dy = particle.y - origin.y;
+        const distance = Math.hypot(dx, dy) || 1;
+        const speed = 55 + rand() * 70;
+        particle.vx += dx / distance * speed + (rand() - .5) * 100;
+        particle.vy += dy / distance * speed + (rand() - .5) * 100;
+      });
+    }
+    function onMove(event) {
+      const rect = root.getBoundingClientRect();
+      const nextPointer = { x: event.clientX - rect.left, y: event.clientY - rect.top };
+      const moved = Math.hypot(event.movementX || 0, event.movementY || 0) > 4
+        || (pointer.x >= 0 && Math.hypot(nextPointer.x - pointer.x, nextPointer.y - pointer.y) > 4);
+      if (moved && !hasDisturbedParticles) {
+        hasDisturbedParticles = true;
+        beginTransition(nextPointer);
+      }
+      pointer = nextPointer;
+    }
+    function onLeave() { pointer = { x: -9999, y: -9999 }; hasDisturbedParticles = false; }
+    function onPointerOut(event) { if (!event.relatedTarget || !root.contains(event.relatedTarget)) onLeave(); }
+    layout(); if (!prefersReduced) raf = requestAnimationFrame(frame); const observer = new ResizeObserver(layout); observer.observe(root); root.addEventListener('pointermove', onMove); root.addEventListener('pointerleave', onLeave); root.addEventListener('pointerout', onPointerOut);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (document.body.contains(root)) layout(); });
-    murmurationCleanup = () => { cancelAnimationFrame(raf); observer.disconnect(); root.removeEventListener('pointermove', onMove); root.removeEventListener('pointerleave', onLeave); };
+    murmurationCleanup = () => { cancelAnimationFrame(raf); window.clearTimeout(scatterTimer); observer.disconnect(); root.removeEventListener('pointermove', onMove); root.removeEventListener('pointerleave', onLeave); root.removeEventListener('pointerout', onPointerOut); };
   }
 
   function runVoice() {
@@ -316,8 +433,14 @@
   app.addEventListener('click', event => {
     const target = event.target.closest('[data-action]'); if (!target) return;
     const action = target.dataset.action;
+    if (action === 'home') {
+      if (state.page !== 'landing') navigate('landing');
+      else window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     if (action === 'navigate') { navigate(target.dataset.page); return; }
     if (action === 'scroll-story') { $('#como-funciona')?.scrollIntoView({ behavior: 'smooth' }); return; }
+    if (action === 'scroll-section') { $(`#${target.dataset.section}`)?.scrollIntoView({ behavior: 'smooth' }); return; }
     if (action === 'open-menu') { state.menuOpen = true; render(); return; }
     if (action === 'close-menu') { state.menuOpen = false; render(); return; }
     if (action === 'toggle-add-device') { state.addingDevice = !state.addingDevice; render(); return; }
